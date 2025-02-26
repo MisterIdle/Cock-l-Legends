@@ -1,0 +1,705 @@
+[
+    {
+        "Ingredient": "Light rum",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Bourbon",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Vodka",
+        "Colors": [
+            "#D1D1D1",
+            "#C98A4A",
+            "#B8D1D1"
+        ]
+    },
+    {
+        "Ingredient": "Gin",
+        "Colors": [
+            "#D1D1D1",
+            "#C98A4A",
+            "#B8D1D1"
+        ]
+    },
+    {
+        "Ingredient": "Blended whiskey",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Tequila",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Sweet Vermouth",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Apricot brandy",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Triple sec",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Southern Comfort",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Orange bitters",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Brandy",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Lemon vodka",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Dry Vermouth",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Dark rum",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Amaretto",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Tea",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Applejack",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Champagne",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Scotch",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Coffee liqueur",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Añejo rum",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Bitters",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Sugar",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Kahlua",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Dubonnet Rouge",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Lime juice",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Irish whiskey",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Apple brandy",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Carbonated water",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Cherry brandy",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Creme de Cacao",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Grenadine",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Port",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Coffee brandy",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Red wine",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Rum",
+        "Colors": [
+            "#D1D1D1",
+            "#C98A4A",
+            "#B8D1D1"
+        ]
+    },
+    {
+        "Ingredient": "Grapefruit juice",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Ricard",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Sherry",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Cognac",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Sloe gin",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Strawberry schnapps",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Apple juice",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Pineapple juice",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Lemon juice",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Sugar syrup",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Milk",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Strawberries",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Chocolate syrup",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Yoghurt",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Mango",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Ginger",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Lime",
+        "Colors": [
+            "#A8E04E",
+            "#F5E200"
+        ]
+    },
+    {
+        "Ingredient": "Cantaloupe",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Berries",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Grapes",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Kiwi",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Tomato juice",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Cocoa powder",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Chocolate",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Heavy cream",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Galliano",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Peach Vodka",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Ouzo",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Coffee",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Spiced rum",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Water",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Espresso",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Angelica root",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Orange",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Cranberries",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Johnnie Walker",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Apple cider",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Everclear",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Cranberry juice",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Egg yolk",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Egg",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Grape juice",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Peach nectar",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Lemon",
+        "Colors": [
+            "#A8E04E",
+            "#F5E200"
+        ]
+    },
+    {
+        "Ingredient": "Firewater",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Lemonade",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Lager",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Whiskey",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Absolut Citron",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Pisco",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Irish cream",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Ale",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Chocolate liqueur",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Midori melon liqueur",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Sambuca",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Cider",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Sprite",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "7-Up",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Blackberry brandy",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Peppermint schnapps",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Creme de Cassis",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Jack Daniels",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    },
+    {
+        "Ingredient": "Baileys irish cream",
+        "Colors": [
+            "#FF5733",
+            "#F1E1B3"
+        ]
+    }
+]
