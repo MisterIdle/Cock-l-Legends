@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="/api/user">
+            <label for="UserMail"><b>Email</b></label>
+            <input type="email" name="UserMail" id="email" class="InputField" size="35" required>
+            <span></span>
+            <label for="User"><b>Username </b></label>
+            <input type="text" name="Username" id="username" class="InputField"  minlength="4" maxlength="14" size="35" required>
+            <span></span>
+            <div class="position-relative">
+                <label for="password"><b>Password</b></label>
+                <input type="password" name="UserPassword" id="password" class="InputField"  minlength="5" size="35" required>
+                <span></span>
+                <label for="Confirm-Password"><b>Confirm Password</b></label>
+                <input type="password" name="Confirm-Password" id="confirm-password" class="InputField"  minlength="5" size="35" required>
+                <span></span><br>
+                <p id ="placement">Already have an account? </p>
+                <input type="submit" value="Send Request" />
+            </div>
+    </form>    
+</body>
+<script src="function.js"></script>
+</html>
