@@ -12,6 +12,16 @@ const PORT = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.get("/styles.css", (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/css/style-main.css'));
+});
+
+app.use("/import", express.static(path.join(__dirname, "public/import")));
+
+app.get("/view/:name", (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/view.html'));
+});
+
 app.get("/api/champions", (req, res) => {
     fs.readFile("character.json", "utf8", (err, data) => {
         if (err) {
@@ -22,7 +32,6 @@ app.get("/api/champions", (req, res) => {
     });
 });
 
-// Endpoint pour récupérer les cocktails associés à un champion
 app.get("/api/cocktails", (req, res) => {
     const championName = req.query.champion;
     fs.readFile("cocktail.json", "utf8", (err, data) => {

@@ -4,133 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>League Champions</title>
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            text-align: center; 
-            background-color: #121212; 
-            color: white; 
-        }
-        
-        .container { 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            gap: 20px; 
-            margin: 20px; 
-        }
-        
-        .champion, .cocktail { 
-            background: #222; 
-            padding: 10px; 
-            border-radius: 10px; 
-            width: 200px; 
-            position: relative; 
-            opacity: 0; 
-            transform: translateY(20px); 
-            animation: fadeInUp 0.5s forwards; 
-        }
-        
-        .champion img, .cocktail img { 
-            width: 100%; 
-            border-radius: 5px; 
-            transition: transform 0.3s ease-in-out; 
-        }
-        
-        .champion .image-container, .cocktail .image-container {
-            position: relative;
-            display: inline-block;
-            border: 5px solid;
-            border-radius: 5px;
-            padding: 5px;
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        .champion:hover .image-container, .cocktail:hover .image-container {
-            transform: scale(1.1);
-        }
-        
-        .palette { 
-            display: flex; 
-            margin-top: 10px; 
-        }
-        
-        .color-box { 
-            width: 33.3%; 
-            height: 20px; 
-        }
-        
-        .ingredients-list {
-            display: none;
-            background-color: #333;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            text-align: left;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        
-        .ingredient-item {
-            margin-bottom: 5px;
-        }
-        
-        .ingredient-item span {
-            display: inline-block;
-            margin-left: 10px;
-            padding: 3px;
-            border-radius: 5px;
-        }
-        
-        .cocktail-list {
-            margin-top: 15px;
-            text-align: left;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideDown {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeOutUp {
-            to {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-        }
-
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #333;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style-main.css">
 </head>
 <body>
     <h1>League Champions and Cocktails</h1>
     <div class="container" id="championContainer"></div>
+
+    <div id="transitionOverlay"></div>
 
     <script>
         async function fetchChampions() {
@@ -157,26 +37,40 @@
                             </div>
                         `).join("")}
                     </div>
-                    <div class="cocktail-list" id="cocktails-${champ.Name}">
-                        <h4>Recommended Cocktails:</h4>
-                    </div>
                 `;
 
-                champDiv.addEventListener("mouseenter", () => {
-                    const ingredients = document.getElementById(`ingredients-${champ.Name}`);
-                    ingredients.style.display = "block";
-                    ingredients.style.animation = "slideDown 0.5s forwards";
+                champDiv.addEventListener("click", (e) => {
+                    const overlay = document.getElementById("transitionOverlay");
+
+                    const x = e.clientX;
+                    const y = e.clientY;
+
+                    overlay.style.background = champ.Mixed;
+                    overlay.style.top = `${y}px`;
+                    overlay.style.left = `${x}px`;
+                    overlay.style.width = "100px";
+                    overlay.style.height = "100px";
+                    overlay.style.transform = "translate(-50%, -50%) scale(0)";
+                    overlay.style.transition = "none";
+
+                    requestAnimationFrame(() => {
+                        overlay.style.transition = "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)";
+                        overlay.style.transform = "translate(-50%, -50%) scale(40)";
+                    });
+                
+                    setTimeout(() => {
+                        window.location.href = `/view/${encodeURIComponent(champ.Name)}`;
+                    }, 700);
                 });
 
-                champDiv.addEventListener("mouseleave", () => {
-                    const ingredients = document.getElementById(`ingredients-${champ.Name}`);
-                    ingredients.style.animation = "";
-                    ingredients.style.display = "none";
+
+                window.addEventListener("pageshow", () => {
+                    const overlay = document.getElementById("transitionOverlay");
+                    overlay.style.transition = "none";
+                    overlay.style.transform = "translate(-50%, -50%) scale(0)";
                 });
 
                 container.appendChild(champDiv);
-
-                fetchCocktailsForChampion(champ.Name);
             });
         }
 
