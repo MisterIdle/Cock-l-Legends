@@ -13,7 +13,6 @@ IMAGE_DIR = "./images"
 os.makedirs(IMAGE_DIR, exist_ok=True)
 
 action_templates = [
-    # Sans temps
     "Add {quantity} {unit} of {ingredient} to a shaker and let it rest briefly.",
     "Pour {quantity} {unit} of {ingredient} into a chilled glass for an elegant start.",
     "Shake {quantity} {unit} of {ingredient} vigorously with ice until well mixed.",
@@ -28,7 +27,7 @@ action_templates = [
     "Float {quantity} {unit} of {ingredient} on top for a layered presentation.",
     "Combine {quantity} {unit} of {ingredient} with crushed ice for an instant chill.",
     "Blend {quantity} {unit} of {ingredient} until smooth and creamy.",
-    "Rim the glass with {ingredient} for a flavorful first sip.",  # unit/quantity souvent non pertinent ici
+    "Rim the glass with {ingredient} for a flavorful first sip.",
     "Infuse {quantity} {unit} of {ingredient} into the base for a deep, complex taste.",
     "Sprinkle {quantity} {unit} of {ingredient} lightly for a touch of flair.",
     "Drizzle {quantity} {unit} of {ingredient} delicately across the surface.",
@@ -41,8 +40,6 @@ action_templates = [
     "Drop {quantity} {unit} of {ingredient} into the center for a dramatic reveal.",
     "Grate {quantity} {unit} of {ingredient} on top for a final touch.",
     "Use {quantity} {unit} of {ingredient} as a striking decorative element.",
-
-    # Avec temps
     "Shake {quantity} {unit} of {ingredient} vigorously for {time} seconds.",
     "Stir {quantity} {unit} of {ingredient} with precision for {time} seconds.",
     "Let {quantity} {unit} of {ingredient} infuse for {time} seconds.",
@@ -64,7 +61,6 @@ action_templates = [
     "Let {quantity} {unit} of {ingredient} dance in the glass for {time} seconds before serving.",
     "Layer {quantity} {unit} of {ingredient} carefully, taking about {time} seconds per layer."
 ]
-
 
 final_steps = [
     "Serve chilled and enjoy immediately.",
@@ -93,20 +89,12 @@ def extract_significant_colors(image_path, top_n=3):
     pixels = img.getcolors(maxcolors=100000)
     if not pixels:
         return [(100, 100, 100)]
-
-    # Filtrer les couleurs de fond
     filtered_colors = [(count, col) for count, col in pixels if not is_background_color(col)]
     if not filtered_colors:
-        filtered_colors = pixels  # fallback
-
-    # Pondérer les couleurs rares (inverse de la fréquence)
+        filtered_colors = pixels
     max_count = max(count for count, _ in filtered_colors)
     scored = [(max_count - count, col) for count, col in filtered_colors]
-
-    # Trier par rareté décroissante (plus rare = plus important)
     scored.sort(reverse=True)
-
-    # Extraire les plus significatives
     significant_colors = [col for _, col in scored[:top_n]]
     return significant_colors
 
@@ -119,35 +107,25 @@ def string_similarity(str1, str2):
     return len(set(str1.lower().split()) & set(str2.lower().split()))
 
 def generate_complex_random_name(champion_name, ingredients_list):
-    # Choisir un ingrédient existant (ou en ajouter un si vide)
     if ingredients_list:
         ingredient = random.choice(ingredients_list)
     else:
         ingredient = random.choice(ingredient_data)["ingredient"]
         ingredients_list.append(ingredient)
-
-    # Nom de base
     name_parts = [
         champion_name[:5],
         ingredient[:5]
     ]
-
     separators = [" ", "'", " with ", "-", "_"]
     separator = random.choice(separators) if random.random() < 0.7 else ""
-
     suffixes = [" infused", " blend", " mix", " fusion", " twist"]
     suffix = random.choice(suffixes) if random.random() < 0.4 else ""
-
     name = f"{name_parts[0]}{separator}{name_parts[1]}{suffix}".strip()
-
-    # Style "gamer" avec caractères spéciaux
     replacements = {'a': '@', 'e': '3', 'i': '1', 'o': '0', 's': '$'}
     unique_name = ''.join(c if random.random() > 0.1 else replacements.get(c, c) for c in name)
-
     return unique_name, ingredient
 
 def find_similar_ingredients(champion_name, ingredients, threshold=0.6):
-    """Trouve les ingrédients ayant une forte similarité avec le nom du champion."""
     matches = []
     for item in ingredients:
         ing_name = item["ingredient"]
@@ -157,37 +135,26 @@ def find_similar_ingredients(champion_name, ingredients, threshold=0.6):
     return matches
 
 def generate_complex_random_name(champion_name, ingredients_list):
-    # Générer un nom plus cohérent avec les ingrédients
     matching_ingredients = find_similar_ingredients(champion_name, ingredient_data, threshold=0.5)
-    
     if matching_ingredients:
         ingredient = random.choice(matching_ingredients)
     else:
         ingredient = random.choice(ingredient_data)
-
     if ingredient["ingredient"] not in ingredients_list:
         ingredients_list.append(ingredient["ingredient"])
-
     name_parts = [
         champion_name[:5],
         ingredient["ingredient"][:5]
     ]
-
     separators = [" ", "'", " with ", "-", "_"]
     separator = random.choice(separators) if random.random() < 0.7 else ""
-
     suffixes = [" infused", " blend", " mix", " fusion", " twist"]
     suffix = random.choice(suffixes) if random.random() < 0.4 else ""
-
     name = f"{name_parts[0]}{separator}{name_parts[1]}{suffix}".strip()
-
-    # Style gamer avec des caractères spéciaux (rare)
     replacements = {'a': '@', 'e': '3', 'i': '1', 'o': '0', 's': '$'}
     unique_name = ''.join(c if random.random() > 0.1 else replacements.get(c.lower(), c) for c in name)
-
     return unique_name, ingredient["ingredient"]
 
-# --- Récupération des données d'ingrédients ---
 print("Fetching ingredients...")
 resp = requests.get(API_URL)
 ingredient_data = []
@@ -207,7 +174,6 @@ else:
     print("Failed to get ingredients.")
     exit()
 
-# --- Récupération des champions ---
 print("Fetching champion data...")
 resp = requests.get(CHAMPION_DATA_URL)
 if not resp.ok:
@@ -218,19 +184,16 @@ champions = resp.json()["data"]
 champion_colors = {}
 final_character_data = []
 
-# --- Analyse des images ---
 print("Processing champion images...")
 for champ_name, champ_info in champions.items():
     filename = champ_info['image']['full']
     img_url = f"{IMG_BASE_URL}{filename}"
     img_path = os.path.join(IMAGE_DIR, filename)
-
     if not os.path.exists(img_path):
         r = requests.get(img_url)
         if r.ok:
             with open(img_path, "wb") as f:
                 f.write(r.content)
-
     try:
         colors = extract_significant_colors(img_path, top_n=5)
         hex_colors = [rgb_to_hex(c) for c in colors]
@@ -248,7 +211,6 @@ for champ_name, champ_info in champions.items():
     except Exception as e:
         print(f"{champ_name}: {e}")
 
-# --- Match ingrédients -> champions ---
 def match_ingredient_to_champion(ingredient, champion_colors):
     matched = set()
     for champ, color in champion_colors.items():
@@ -266,29 +228,20 @@ for ing in ingredient_data:
         "Champions": matches
     })
 
-# --- Ajout ingrédients aléatoires et noms ---
 for champ in final_character_data:
-    # Ajout prioritaire d'ingrédients similaires
     similar_ings = find_similar_ingredients(champ["Name"], ingredient_data)
     base_ings = random.sample(ingredient_data, random.randint(2, 5))
     selected = list({i["ingredient"] for i in (similar_ings + base_ings)})
-
     champ["Ingredients"] = selected
     name, ingr = generate_complex_random_name(champ["Name"], champ["Ingredients"])
     if ingr not in champ["Ingredients"]:
         champ["Ingredients"].append(ingr)
     champ["Cocktail Name"] = name
 
-
-
-# --- Sauvegarde JSON ---
-
-# --- Generate preparation steps ---
 def generate_preparation_steps(ingredients):
     steps = []
     random.shuffle(ingredients)
     used_templates = set()
-
     for ing in ingredients:
         available_templates = [t for t in action_templates if t not in used_templates]
         if not available_templates:
@@ -296,29 +249,24 @@ def generate_preparation_steps(ingredients):
             available_templates = action_templates
         template = random.choice(available_templates)
         used_templates.add(template)
-
         quantity = round(random.uniform(0.2, 5.0), 1)
         unit = random.choice(["ml", "cl", "oz"])
-
         if "{time}" in template:
             time = random.randint(5, 30)
             step = template.format(ingredient=ing, time=time, quantity=quantity, unit=unit)
         else:
             step = template.format(ingredient=ing, quantity=quantity, unit=unit)
         steps.append(step)
-
     final = random.choice(final_steps)
     if "{time}" in final:
         steps.append(final.format(time=random.randint(5, 15)))
     else:
         steps.append(final)
-
     return steps
 
 for champ in final_character_data:
     random.shuffle(champ["Ingredients"])
     champ["Preparation"] = generate_preparation_steps(champ["Ingredients"])
-
 
 print("Saving JSON data...")
 with open("character.json", "w", encoding="utf-8") as f:

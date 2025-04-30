@@ -4,142 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Champion View</title>
-    <link rel="stylesheet" href="css/style-main.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .champion-details {
-            text-align: center;
-        }
-
-        .glass {
-            width: 400px;
-            height: auto;
-        }
-
-        #glass-container {
-            position: relative;
-            display: inline-block;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-        }
-
-        #liquid-overlay {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translateX(-53%);
-            width: 40%;
-            height: 21%;
-            border-radius: 0% 0% 70% 85%;
-            z-index: 1;
-            opacity: 0.8;
-        }
-
-        #glass {
-            position: relative;
-            z-index: 2;
-        }
-
-        .color-box {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            margin: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        #cocktailName {
-            color: #b22222;
-            font-size: 24px;
-            margin-top: 10px;
-        }
-
-        #ingredients, #preparation {
-            margin-top: 20px;
-            text-align: left;
-            display: inline-block;
-            padding: 15px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        #ingredients div,
-        #preparation li {
-            margin: 5px 0;
-            font-size: 16px;
-        }
-
-        #preparation {
-            margin-top: 30px;
-        }
-
-        #preparation-title {
-            font-weight: bold;
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <header>
+        <div class="header-content">
+            <a href="/" id="site-name" class="site-name">Cockt'l Legands</a>
+            <div class="header-buttons"></div>
+                <button id="loginBtn"><i class="fa fa-sign-in"></i> Login</button>
+                <button id="favoritesBtn"><i class="fa fa-heart"></i> Favorites</button>
+            </div>
+        </div>
+    </header>
+
     <div class="champion-details">
         <h1 id="championName"></h1>
         <img id="championImage" src="" alt="">
-        <h2 id="cocktailName"></h2>
-
-        <div id="ingredients"></div>
-        <div id="palette"></div>
-
-        <div id="preparation">
-            <div id="preparation-title">Préparation</div>
-            <ul id="preparation-list"></ul>
-        </div>
 
         <div id="glass-container">
             <div id="liquid-overlay"></div>
             <img src="/import/verre.png" alt="Glass" class="glass" id="glass">
         </div>
+        <h2 id="cocktailName"></h2>
+
+        <div id="palette"></div>
+
+        <div id="ingredients"></div>
+        <div id="preparation">
+            <div id="preparation-title">Preparation</div>
+            <ul id="preparation-list"></ul>
+        </div>
     </div>
 
     <script>
-        const championName = decodeURIComponent(window.location.pathname.split('/').pop());
-
+        const urlParams = new URLSearchParams(window.location.search);
+        const championName = urlParams.get('name');
+    
         fetch("/api/champions")
             .then(res => res.json())
             .then(data => {
                 const champ = data.find(c => c.Name === championName);
                 if (!champ) return;
-
+    
                 document.getElementById("championName").textContent = champ.Name;
                 document.getElementById("championImage").src = champ.Image;
                 document.getElementById("championImage").alt = champ.Name;
                 document.getElementById("cocktailName").textContent = champ["Cocktail Name"];
-
+    
                 document.getElementById("ingredients").innerHTML = `
-                    <h3>Ingrédients</h3>
+                    <h3>Ingredients</h3>
                     ${champ.Ingredients.map(i => `<div>${i}</div>`).join("")}
                 `;
-
+    
                 document.getElementById("palette").innerHTML = champ.Palette
                     .map(color => `<div class="color-box" style="background:${color};"></div>`)
                     .join("");
-
+    
                 document.getElementById("liquid-overlay").style.backgroundColor = champ.Mixed;
-
+    
                 document.getElementById("preparation-list").innerHTML = champ.Preparation
                     .map(step => `<li>${step}</li>`)
                     .join("");
             });
-    </script>
+    </script>    
 </body>
 </html>

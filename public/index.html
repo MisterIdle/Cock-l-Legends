@@ -4,96 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>League Champions</title>
-    <link rel="stylesheet" href="css/style-main.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+    <header>
+        <div class="header-content">
+            <a href="/" id="site-name" class="site-name">Cockt'l Legends</a>
+            <div class="header-buttons"></div>
+                <button id="loginBtn"><i class="fa fa-sign-in"></i> Login</button>
+                <button id="favoritesBtn"><i class="fa fa-heart"></i> Favorites</button>
+            </div>
+        </div>
+    </header>
+
     <h1>League Champions and Cocktails</h1>
+
+    <input type="text" id="searchInput" placeholder="Search by ingredient, name, or cocktail...">
+
     <div class="container" id="championContainer"></div>
 
     <div id="transitionOverlay"></div>
 
     <script>
+        let allChampions = [];
+
+        function createChampionCard(champ) {
+            const champDiv = document.createElement("div");
+            champDiv.classList.add("champion");
+            champDiv.innerHTML = `
+                <div class="image-container" style="border-color:${champ.Mixed};">
+                    <img src="${champ.Image}" alt="${champ.Name}">
+                </div>
+                <h3 style="color: ${champ.Mixed};">${champ.Name}</h3>
+                <h5 style="color: ${champ.Mixed};">${champ["Cocktail Name"]}</h5>
+                <div class="palette">
+                    ${champ.Palette.map(color => `<div class="color-box" style="background:${color};"></div>`).join("")}
+                </div>
+                <div class="ingredients-list" id="ingredients-${champ.Name}">
+                    ${champ.Ingredients.map(ingredient => `<div class="ingredient-item">${ingredient}</div>`).join("")}
+                </div>
+            `;
+
+            champDiv.addEventListener("click", (e) => {
+                const overlay = document.getElementById("transitionOverlay");
+
+                const x = e.clientX;
+                const y = e.clientY;
+
+                overlay.style.background = champ.Mixed;
+            
+                overlay.style.top = `${y}px`;
+                overlay.style.left = `${x}px`;
+                overlay.style.width = "100px";
+                overlay.style.height = "100px";
+                overlay.style.transform = "translate(-50%, -50%) scale(0)";
+                overlay.style.transition = "none";
+
+                requestAnimationFrame(() => {
+                    overlay.style.transition = "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)";
+                    overlay.style.transform = "translate(-50%, -50%) scale(40)";
+                });
+
+                // Redirection vers /view.html?name=NomChampion
+                setTimeout(() => {
+                    window.location.href = `/view.html?name=${encodeURIComponent(champ.Name)}`;
+                }, 700);
+            });
+
+            return champDiv;
+        }
+
+        function renderChampions(champions) {
+            const container = document.getElementById("championContainer");
+            container.innerHTML = "";
+            champions.forEach(champ => {
+                container.appendChild(createChampionCard(champ));
+            });
+        }
+
         async function fetchChampions() {
             const res = await fetch("/api/champions");
-            const champions = await res.json();
-            const container = document.getElementById("championContainer");
-
-            champions.forEach(champ => {
-                const champDiv = document.createElement("div");
-                champDiv.classList.add("champion");
-                champDiv.innerHTML = `
-                    <div class="image-container" style="border-color:${champ.Mixed};">
-                        <img src="${champ.Image}" alt="${champ.Name}">
-                    </div>
-                    <h3 style="color: ${champ.Mixed};">${champ.Name}</h3>
-                    <h5 style="color: ${champ.Mixed};">${champ["Cocktail Name"]}</h5>
-                    <div class="palette">
-                        ${champ.Palette.map(color => `<div class="color-box" style="background:${color};"></div>`).join("")}
-                    </div>
-                    <div class="ingredients-list" id="ingredients-${champ.Name}">
-                        ${champ.Ingredients.map(ingredient => `
-                            <div class="ingredient-item">
-                                ${ingredient}
-                            </div>
-                        `).join("")}
-                    </div>
-                `;
-
-                champDiv.addEventListener("click", (e) => {
-                    const overlay = document.getElementById("transitionOverlay");
-
-                    const x = e.clientX;
-                    const y = e.clientY;
-
-                    overlay.style.background = champ.Mixed;
-                    overlay.style.top = `${y}px`;
-                    overlay.style.left = `${x}px`;
-                    overlay.style.width = "100px";
-                    overlay.style.height = "100px";
-                    overlay.style.transform = "translate(-50%, -50%) scale(0)";
-                    overlay.style.transition = "none";
-
-                    requestAnimationFrame(() => {
-                        overlay.style.transition = "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)";
-                        overlay.style.transform = "translate(-50%, -50%) scale(40)";
-                    });
-                
-                    setTimeout(() => {
-                        window.location.href = `/view/${encodeURIComponent(champ.Name)}`;
-                    }, 700);
-                });
-
-
-                window.addEventListener("pageshow", () => {
-                    const overlay = document.getElementById("transitionOverlay");
-                    overlay.style.transition = "none";
-                    overlay.style.transform = "translate(-50%, -50%) scale(0)";
-                });
-
-                container.appendChild(champDiv);
-            });
+            allChampions = await res.json();
+            renderChampions(allChampions);
         }
 
-        async function fetchCocktailsForChampion(championName) {
-            const res = await fetch(`/api/cocktails?champion=${championName}`);
-            const cocktails = await res.json();
-            const cocktailContainer = document.getElementById(`cocktails-${championName}`);
-
-            cocktails.forEach(cocktail => {
-                const cocktailDiv = document.createElement("div");
-                cocktailDiv.classList.add("cocktail");
-                cocktailDiv.innerHTML = `
-                    <h5>${cocktail.Name}</h5>
-                    <div class="image-container">
-                        <img src="${cocktail.Image}" alt="${cocktail.Name}">
-                    </div>
-                    <p>${cocktail.Description}</p>
-                `;
-                cocktailContainer.appendChild(cocktailDiv);
+        document.getElementById("searchInput").addEventListener("input", (e) => {
+            const value = e.target.value.toLowerCase();
+            const filtered = allChampions.filter(champ => {
+                return champ.Name.toLowerCase().includes(value)
+                    || champ["Cocktail Name"].toLowerCase().includes(value)
+                    || champ.Ingredients.some(ing => ing.toLowerCase().includes(value));
             });
-        }
+            renderChampions(filtered);
+        });
+
+        window.addEventListener("pageshow", () => {
+            const overlay = document.getElementById("transitionOverlay");
+            overlay.style.transition = "none";
+            overlay.style.transform = "translate(-50%, -50%) scale(0)";
+        });
 
         fetchChampions();
     </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </body>
 </html>

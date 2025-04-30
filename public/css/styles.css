@@ -1,0 +1,410 @@
+@font-face {
+    font-family: 'League';
+    src: url('../font/League.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LeagueNormal';
+    src: url('../font/LeagueNormal.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    /* Fonts */
+    --font-main: 'League';
+    --font-secondary: 'LeagueNormal';
+    
+    /* Colors */
+    --background-color: #121212;
+    --text-color: white;
+    --placeholder-color: #aaa;
+    --scrollbar-background: #333;
+    --scrollbar-thumb: #888;
+    --scrollbar-thumb-hover: #555;
+    --highlight-color: #ffd700;
+    --ingredient-background: #1e1e1e;
+    --ingredient-title-color: #f5b041;
+    --ingredient-text-color: #f5b041;
+    --list-item-bullet: #ff7f50;
+    --glass-background: #444;
+    
+    /* Spacing */
+    --padding: 20px;
+    --gap: 20px;
+    --border-radius: 10px;
+    --image-border-radius: 5px;
+    
+    /* Font Sizes */
+    --font-size-main: 16px;
+    --font-size-large: 26px;
+    --font-size-xlarge: 36px;
+    --font-size-ingredient: 20px;
+    
+    /* Transition & Animation */
+    --transition-duration: 0.3s;
+    --transition-ease: ease-in-out;
+    --fade-in-duration: 0.5s;
+    --scrollbar-width: 12px;
+    --scrollbar-radius: 10px;
+}
+
+/* Global Styles */
+body {
+    font-family: var(--font-main), sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--padding);
+    text-align: center;
+}
+
+::placeholder {
+    color: var(--placeholder-color);
+}
+
+::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-background);
+    border-radius: var(--scrollbar-radius);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--scrollbar-radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Champion / Cocktail Overview Grid */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap);
+    margin: var(--padding);
+    cursor: pointer;
+}
+
+.champion, .cocktail {
+    background: #222;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    width: 200px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp var(--fade-in-duration) forwards;
+}
+
+
+.champion img, .cocktail img {
+    width: 100%;
+    border-radius: var(--image-border-radius);
+    transition: transform var(--transition-duration) var(--transition-ease);
+}
+
+.champion .image-container, .cocktail .image-container {
+    position: relative;
+    display: inline-block;
+    border: 5px solid;
+    border-radius: var(--image-border-radius);
+    padding: 5px;
+    transition: transform var(--transition-duration) var(--transition-ease);
+}
+
+.champion:hover .image-container, .cocktail:hover .image-container {
+    transform: scale(1.1);
+}
+
+/* Detail View */
+.champion-details {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#championName {
+    font-size: var(--font-size-xlarge);
+    margin-bottom: 10px;
+}
+
+#championImage {
+    width: 200px;
+    margin-bottom: 70px;
+    margin-left: 100px;
+    border-radius: var(--border-radius);
+    border: 5px solid var(--glass-background);
+    background-color: var(--ingredient-background);
+}
+
+/* Cocktail Details */
+#cocktailName {
+    font-family: var(--font-secondary), sans-serif;
+    font-size: var(--font-size-large);
+    color: var(--highlight-color);
+    margin: 20px 0 10px;
+}
+
+#ingredients, #preparation {
+    font-family: var(--font-secondary), sans-serif;
+    background-color: var(--ingredient-background);
+    padding: var(--padding);
+    border-radius: var(--border-radius);
+    margin: 20px auto;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    max-width: 600px;
+}
+
+#ingredients h3 {
+    margin-top: 0;
+    color: var(--ingredient-title-color);
+    font-size: var(--font-size-ingredient);
+}
+
+#ingredients div,
+#preparation li {
+    margin: 8px 0;
+    padding-left: 10px;
+    position: relative;
+}
+
+#ingredients div {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    background-color: #333;
+    border-radius: 5px;
+}
+
+#preparation li::before {
+    content: "•";
+    color: var(--list-item-bullet);
+    position: absolute;
+    left: 0;
+}
+
+#preparation-title {
+    color: var(--ingredient-title-color);
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Palette */
+.palette, #palette {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.color-box {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+
+/* Glass and Liquid */
+#glass-container {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.glass {
+    width: 400px;
+    height: auto;
+}
+
+#liquid-overlay {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-53%);
+    width: 40%;
+    height: 21%;
+    border-radius: 0% 0% 70% 85%;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+#glass {
+    position: relative;
+    z-index: 2;
+}
+
+/* Ingredients Slide Down */
+.ingredients-list {
+    display: none;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--fade-in-duration), transform var(--fade-in-duration);
+}
+
+.ingredient-item {
+    margin-bottom: 5px;
+}
+
+.ingredient-item span {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+/* Search Input */
+#searchInput {
+    display: block;
+    width: 300px;
+    margin: 20px auto;
+    padding: 10px 15px;
+    font-size: var(--font-size-main);
+    border: 2px solid #444;
+    border-radius: 8px;
+    background-color: var(--ingredient-background);
+    color: #fff;
+    transition: border var(--transition-duration), box-shadow var(--transition-duration);
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: var(--scrollbar-thumb);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+
+/* Header Styles */
+header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #121212 100%);
+    padding: 20px 40px;
+    border-bottom: 1px solid #444;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
+    margin-bottom: 30px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#site-name {
+    font-family: var(--font-main), sans-serif;
+    font-size: var(--font-size-large);
+    color: var(--highlight-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: color var(--transition-duration);
+    margin-right: auto;
+    padding-left: 10px;
+}
+
+#site-name:hover {
+    color: #fff;
+}
+
+button {
+    background-color: transparent;
+    border: 2px solid var(--highlight-color);
+    color: var(--highlight-color);
+    padding: 8px 16px;
+    font-size: var(--font-size-main);
+    font-family: var(--font-secondary), sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color var(--transition-duration), color var(--transition-duration);
+    margin: 0 10px;
+    padding: 8px 18px;
+}
+
+button i {
+    margin-right: 8px;
+}
+
+button:hover {
+    background-color: var(--highlight-color);
+    color: #121212;
+}
+
+/* Search Input */
+#searchInput {
+    display: block;
+    width: 300px;
+    margin: 20px auto;
+    padding: 10px 15px;
+    font-size: var(--font-size-main);
+    border: 2px solid #444;
+    border-radius: 8px;
+    background-color: var(--ingredient-background);
+    color: #fff;
+    transition: border var(--transition-duration), box-shadow var(--transition-duration);
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: var(--scrollbar-thumb);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+
+/* Transitions */
+#transitionOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    background: black;
+    z-index: 9999;
+    pointer-events: none;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutUp {
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
