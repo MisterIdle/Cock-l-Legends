@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Cocktails</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+        <a href="/" id="site-name" class="site-name">Cockt'l Legends</a>
+        <div class="header-buttons">
+            <a href="/login" id="loginLink">
+                <button id="loginBtn"><i class="fa fa-sign-in"></i> Login</button>
+            </a>
+
+            <span id="userInfo" style="display: none;">
+                <i class="fa fa-user"></i> <span id="usernameDisplay"></span>
+                <form id="logoutForm" action="/logout" method="POST" style="display: inline;">
+                    <button type="submit"><i class="fa fa-sign-out-alt"></i> Logout</button>
+                </form>
+            </span>
+
+            <a href="/favorites"><button id="favoritesBtn"><i class="fa fa-heart"></i> Favorites</button></a>
+        </div>
+    </div>
+    </header>
+
+    <h1>My Favorite Champions and Cocktails</h1>
+
+    <div class="container" id="championContainer"></div>
+
+    <div id="transitionOverlay"></div>
+
+    <script>
+        let allChampions = [];
+
+function createChampionCard(champ) {
+    const champDiv = document.createElement("div");
+    champDiv.classList.add("champion");
+    champDiv.innerHTML = `
+        <div class="image-container" style="border-color:${champ.Mixed};">
+            <img src="${champ.Image}" alt="${champ.Name}">
+        </div>
+        <h3 style="color: ${champ.Mixed};">${champ.Name}</h3>
+        <h5 style="color: ${champ.Mixed};">${champ["Cocktail Name"]}</h5>
+        <div class="palette">
+            ${champ.Palette.map(color => `<div class="color-box" style="background:${color};"></div>`).join("")}
+        </div>
+        <div class="ingredients-list" id="ingredients-${champ.Name}">
+            ${champ.Ingredients.map(ingredient => `<div class="ingredient-item">${ingredient}</div>`).join("")}
+        </div>
+    `;
+
+    champDiv.addEventListener("click", (e) => {
+        const overlay = document.getElementById("transitionOverlay");
+
+        const x = e.clientX;
+        const y = e.clientY;
+
+        overlay.style.background = champ.Mixed;
+        overlay.style.top = `${y}px`;
+        overlay.style.left = `${x}px`;
+        overlay.style.width = "100px";
+        overlay.style.height = "100px";
+        overlay.style.transform = "translate(-50%, -50%) scale(0)";
+        overlay.style.transition = "none";
+
+        requestAnimationFrame(() => {
+            overlay.style.transition = "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)";
+            overlay.style.transform = "translate(-50%, -50%) scale(40)";
+        });
+
+        setTimeout(() => {
+            window.location.href = `/view.html?name=${encodeURIComponent(champ.Name)}`;
+        }, 700);
+    });
+
+    return champDiv;
+}
+
+function renderChampions(champions) {
+    const container = document.getElementById("championContainer");
+    container.innerHTML = "";
+
+    if (champions.length === 0) {
+        container.innerHTML = "<p>No favorite champions found.</p>";
+        return;
+    }
+
+    champions.forEach(champ => {
+        container.appendChild(createChampionCard(champ));
+    });
+}
+
+async function fetchFavorites() {
+    try {
+        const favRes = await fetch("/api/favorites");
+        if (!favRes.ok) throw new Error("Failed to fetch favorites");
+
+        const favData = await favRes.json();
+        const favoriteNames = favData.favorites || [];
+
+        console.log("Favorite cocktail names:", favoriteNames);
+
+        const champRes = await fetch("/api/champions");
+        if (!champRes.ok) throw new Error("Failed to fetch champions");
+
+        allChampions = await champRes.json();
+
+        console.log("All champions:", allChampions);
+
+        const favoriteNamesSet = new Set(favoriteNames.map(name => name.trim().toLowerCase()));
+
+        const favoriteChampions = allChampions.filter(champ => {
+            const champCocktailName = (champ.Name || "").trim().toLowerCase();
+            return favoriteNamesSet.has(champCocktailName);
+        });
+
+        console.log("Matched favorite champions:", favoriteChampions);
+
+        renderChampions(favoriteChampions);
+    } catch (error) {
+        console.error("Error fetching favorites or champions:", error);
+        const container = document.getElementById("championContainer");
+        container.innerHTML = "<p>Unable to load favorites.</p>";
+    }
+}
+
+
+window.addEventListener("pageshow", () => {
+    const overlay = document.getElementById("transitionOverlay");
+    overlay.style.transition = "none";
+    overlay.style.transform = "translate(-50%, -50%) scale(0)";
+});
+
+fetchFavorites();
+
+
+fetch("/api/session")
+        .then(res => {
+            if (!res.ok) return null;
+            return res.json();
+        })
+        .then(data => {
+            if (data && data.loggedIn) {
+                // Hide login
+                const loginLink = document.getElementById("loginLink");
+                if (loginLink) loginLink.style.display = "none";
+
+                // Show user info with icon and username
+                const userInfo = document.getElementById("userInfo");
+                const usernameDisplay = document.getElementById("usernameDisplay");
+
+                if (userInfo && usernameDisplay) {
+                    userInfo.style.display = "inline-block";
+                    usernameDisplay.textContent = data.username;
+                }
+            }
+        })
+        .catch(err => {
+            console.error("Session check failed:", err);
+        });
+</script>
+</body>
+</html>

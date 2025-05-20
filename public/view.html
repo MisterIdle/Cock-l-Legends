@@ -5,16 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Champion View</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="header-content">
-            <a href="/" id="site-name" class="site-name">Cockt'l Legands</a>
-            <div class="header-buttons"></div>
+        <a href="/" id="site-name" class="site-name">Cockt'l Legends</a>
+        <div class="header-buttons">
+            <a href="/login" id="loginLink">
                 <button id="loginBtn"><i class="fa fa-sign-in"></i> Login</button>
-                <button id="favoritesBtn"><i class="fa fa-heart"></i> Favorites</button>
-            </div>
+            </a>
+
+            <span id="userInfo" style="display: none;">
+                <i class="fa fa-user"></i> <span id="usernameDisplay"></span>
+                <form id="logoutForm" action="/logout" method="POST" style="display: inline;">
+                    <button type="submit"><i class="fa fa-sign-out-alt"></i> Logout</button>
+                </form>
+            </span>
+
+            <a href="/favorites"><button id="favoritesBtn"><i class="fa fa-heart"></i> Favorites</button></a>
         </div>
+    </div>
     </header>
 
     <div class="champion-details">
@@ -28,12 +39,16 @@
         <h2 id="cocktailName"></h2>
 
         <div id="palette"></div>
+        <button id="addToFavoritesBtn" style="display: none;">Add to Favorites</button>
+        <button id="removeFromFavoritesBtn" style="display: none;">Remove from Favorites</button>
+
 
         <div id="ingredients"></div>
         <div id="preparation">
             <div id="preparation-title">Preparation</div>
             <ul id="preparation-list"></ul>
         </div>
+        
     </div>
 
     <script>
@@ -45,6 +60,30 @@
             .then(data => {
                 const champ = data.find(c => c.Name === championName);
                 if (!champ) return;
+                fetch("/api/favorites")
+                    .then(res => res.json())
+                    .then(favorites => {
+                        let favList = [];
+
+                        if (Array.isArray(favorites)) {
+                            favList = favorites;
+                        } else if (Array.isArray(favorites.favorites)) {
+                            favList = favorites.favorites;
+                        }
+
+                        console.log("Champion Name:", championName);
+                        console.log("Favorites List:", favorites);
+
+                        const isFavorite = favList.some(fav => fav.cocktailName === championName);
+
+                        if (isFavorite) {
+                            document.getElementById("removeFromFavoritesBtn").style.display = "inline-block";
+                        } else {
+                            document.getElementById("addToFavoritesBtn").style.display = "inline-block";
+                        }
+                    });
+
+
     
                 document.getElementById("championName").textContent = champ.Name;
                 document.getElementById("championImage").src = champ.Image;
@@ -65,7 +104,67 @@
                 document.getElementById("preparation-list").innerHTML = champ.Preparation
                     .map(step => `<li>${step}</li>`)
                     .join("");
+
+                
             });
+            document.getElementById("addToFavoritesBtn").addEventListener("click", () => {
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.action = "/api/favorites";
+
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "cocktailName";
+                input.value = championName;
+                form.appendChild(input);
+
+                document.body.appendChild(form);
+                form.submit();
+            });
+
+            document.getElementById("removeFromFavoritesBtn").addEventListener("click", () => {
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.action = "/api/favorites/remove";
+
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "cocktailName";
+                input.value = championName;
+                form.appendChild(input);
+
+                document.body.appendChild(form);
+                form.submit();
+            });
+
+
+            fetch("/api/session")
+            .then(res => {
+                if (!res.ok) return null;
+                return res.json();
+            })
+            .then(data => {
+                if (data && data.loggedIn) {
+                    // Hide login
+                    const loginLink = document.getElementById("loginLink");
+                    if (loginLink) loginLink.style.display = "none";
+
+                    // Show user info with icon and username
+                    const userInfo = document.getElementById("userInfo");
+                    const usernameDisplay = document.getElementById("usernameDisplay");
+
+                    if (userInfo && usernameDisplay) {
+                        userInfo.style.display = "inline-block";
+                        usernameDisplay.textContent = data.username;
+                    }
+                }
+            })
+            .catch(err => {
+                console.error("Session check failed:", err);
+            });
+
     </script>    
+    
+    
 </body>
 </html>
